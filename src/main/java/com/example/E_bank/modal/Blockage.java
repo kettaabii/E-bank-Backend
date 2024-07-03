@@ -1,9 +1,6 @@
 package com.example.E_bank.modal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +11,13 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity (name = "blockage")
-public class blockage {
+public class Blockage {
     @Id
-    private int blockageId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer blockageId;
     private String motif;
 
     @ManyToOne
     @JoinColumn(name = "carteId")
-    private carteBancaire carteBancaire ;
+    private CarteBancaire carteBancaire ;
 }

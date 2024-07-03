@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity (name = "carte_bancaire")
-public class carteBancaire {
+public class CarteBancaire {
     @Id
     private Integer carteId ;
     private String cardNumber;
@@ -26,9 +26,9 @@ public class carteBancaire {
 
     @ManyToOne
     @JoinColumn(name = "accountId")
-    private compte compte;
+    private Compte compte;
 
-    @OneToMany(mappedBy = "blockage")
-    private List<blockage> blockageList;
+    @OneToMany(mappedBy = "carteBancaire")
+    private List<Blockage> blockageList;
 
 }

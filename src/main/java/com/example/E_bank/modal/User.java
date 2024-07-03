@@ -1,9 +1,7 @@
 package com.example.E_bank.modal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +16,15 @@ import java.util.List;
 
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String userName;
     private Integer age;
 
 
     @OneToMany(mappedBy ="user")
-    private List<compte> comptes;
+    @JsonIgnore
+    private List<Compte> comptes;
 
 
 }
