@@ -1,12 +1,11 @@
 package com.example.E_bank.controller;
 
 import com.example.E_bank.modal.Compte;
+import com.example.E_bank.modal.User;
+import com.example.E_bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.E_bank.service.CompteService;
 
 import java.util.List;
@@ -15,10 +14,15 @@ import java.util.List;
 public class CompteController {
   @Autowired
   private CompteService compteservice;
+  @Autowired
+  private UserService userservice;
 
-  @GetMapping("/showaccounts")
-  public List<Compte> getComptes(){
-    List<Compte> list = compteservice.getAllAccounts();
+  @GetMapping("/showaccounts/{id}")
+  public List<Compte> getComptes(@PathVariable Integer id) {
+    User user = userservice.findUserById(id);
+    List<Compte> list = compteservice.getAllAccountsByUserId(user);
+    System.out.println("///////////////////");
+    list.forEach(System.out::println);
     return list;
 
   }
@@ -27,7 +31,23 @@ public class CompteController {
   public Compte addCompte(@RequestBody Compte compte) {
     return compteservice.save(compte);
   }
-  
+
+
+
+
+//  @GetMapping ("/soldes/{idc}/{idu}")
+//  public List<Compte> getSoldes(@PathVariable Integer idc, @PathVariable Integer idu) {
+//    Compte compte =compteservice.getCompteById(idc);
+//    if (compte!=null){
+//
+//    }
+//    return null;
+//  }
+
+
+
+
+
 
 
 
