@@ -40,22 +40,22 @@ public class TransactionServiceTests {
 
     @Test
     public void testGetAllTransactionsByAccountId() {
-        // Mock data
+
         int accountId = 1;
 
-        // Mock repository method
+
         when(transactionRepository.findAllByCompte_AccountId(accountId)).thenReturn(Collections.emptyList());
 
-        // Call service method
+
         transactionService.getalltransactions(accountId);
 
-        // Verify repository interaction
+
         verify(transactionRepository).findAllByCompte_AccountId(accountId);
     }
 
     @Test
     public void testNewTransaction_InternalCredit() throws soldeInsuffisantExeption, compteFermeException {
-        // Mock data
+
         String accountNumber = "123456789";
         double transactionAmount = 50.0;
         Compte compteOrg = new Compte();
@@ -75,24 +75,24 @@ public class TransactionServiceTests {
         transaction.setTypeTransaction(type_transaction.CREDIT);
         transaction.setMontant(transactionAmount);
 
-        // Mock service method invocations
+
         when(compteService.getCompteById(compteOrg.getAccountId())).thenReturn(compteOrg);
         when(compteService.getAccntBynumber(accountNumber)).thenReturn(compteFor);
 
-        // Call service method
+
         transactionService.newtransaction(accountNumber, transaction);
 
-        // Verify service method invocations
+
         verify(compteService).getCompteById(compteOrg.getAccountId());
         verify(compteService).getAccntBynumber(accountNumber);
 
-        // Verify repository interaction
+
         verify(transactionRepository, times(2)).save(any(Transaction.class));
     }
 
     @Test
     public void testNewTransaction_InternalDebit() throws soldeInsuffisantExeption, compteFermeException {
-        // Mock data
+
         String accountNumber = "123456789";
         double transactionAmount = 50.0;
         Compte compteOrg = new Compte();
@@ -112,18 +112,18 @@ public class TransactionServiceTests {
         transaction.setTypeTransaction(type_transaction.DEBIT);
         transaction.setMontant(transactionAmount);
 
-        // Mock service method invocations
+
         when(compteService.getCompteById(compteOrg.getAccountId())).thenReturn(compteOrg);
         when(compteService.getAccntBynumber(accountNumber)).thenReturn(compteFor);
 
-        // Call service method
+
         transactionService.newtransaction(accountNumber, transaction);
 
-        // Verify service method invocations
+
         verify(compteService).getCompteById(compteOrg.getAccountId());
         verify(compteService).getAccntBynumber(accountNumber);
 
-        // Verify repository interaction
+
         verify(transactionRepository, times(2)).save(any(Transaction.class));
     }
 
@@ -142,29 +142,29 @@ public class TransactionServiceTests {
         transaction.setTypeTransaction(type_transaction.DEBIT);
         transaction.setMontant(transactionAmount);
 
-        // Mock service method invocations
+
         when(compteService.getCompteById(compteOrg.getAccountId())).thenReturn(compteOrg);
 
-        // Call service method
+
         transactionService.newtransaction(null, transaction);
 
-        // Verify service method invocations
+
         verify(compteService).getCompteById(compteOrg.getAccountId());
 
-        // Verify repository interaction
+
         verify(transactionRepository).save(any(Transaction.class));
     }
 
     @Test
     public void testNewTransaction_CompteFermeException() {
-        // Mock data
+
         Compte compteOrg = new Compte();
         compteOrg.setAccountId(1);
-        compteOrg.setStatus(status.Actif); // Ensure compteOrg is active
+        compteOrg.setStatus(status.Actif);
 
         Compte compteFor = new Compte();
         compteFor.setAccountId(2);
-        compteFor.setStatus(status.Ferme); // Simulate a closed account
+        compteFor.setStatus(status.Ferme);
 
         String accountNumber = "123456789";
         double transactionAmount = 50.0;
@@ -175,22 +175,22 @@ public class TransactionServiceTests {
         transaction.setTypeTransaction(type_transaction.CREDIT);
         transaction.setMontant(transactionAmount);
 
-        // Mock service method invocations
+
         when(compteService.getCompteById(compteOrg.getAccountId())).thenReturn(compteOrg);
         when(compteService.getAccntBynumber(accountNumber)).thenReturn(compteFor); // Mock to return compteFor
 
-        // Call service method and assert exception
+
         compteFermeException exception = assertThrows(compteFermeException.class,
                 () -> transactionService.newtransaction(accountNumber, transaction));
 
-        // Assertion on exception message
+
         assertEquals("Impossible de faire le transaction , compte fermé", exception.getMessage());
 
-        // Verify service method invocations
+
         verify(compteService).getCompteById(compteOrg.getAccountId());
         verify(compteService).getAccntBynumber(accountNumber);
 
-        // Verify repository interaction (should not save transaction if exception is thrown)
+
         verify(transactionRepository, never()).save(any(Transaction.class));
     }
 

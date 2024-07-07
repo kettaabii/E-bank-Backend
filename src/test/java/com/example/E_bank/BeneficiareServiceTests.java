@@ -37,19 +37,19 @@ public class BeneficiareServiceTests {
         inputBenificiaire.setBank(bank.valueOf("CIH"));
         inputBenificiaire.setCompte(new Compte());
 
-        // Mocking repository behavior
+
         when(beneficiaireRepository.save(inputBenificiaire)).thenReturn(inputBenificiaire);
 
-        // Call service method
+
         Benificiaire result = beneficiareService.addBeneficiaire(inputBenificiaire);
 
-        // Verify the save method is called once
+
         verify(beneficiaireRepository, times(1)).save(inputBenificiaire);
 
-        // Assert the returned result
+
         assertEquals("John Doe", result.getNamebeneficiaire());
         assertEquals("CIH", result.getBank().toString());
-        // Add more assertions as per your requirements
+
     }
 
     @Test
@@ -57,18 +57,18 @@ public class BeneficiareServiceTests {
         Compte compte = new Compte();
         compte.setAccountId(1);
 
-        // Mocking repository behavior
+
         when(beneficiaireRepository.findAllByCompteIs(compte)).thenReturn(new ArrayList<>());
 
-        // Call service method
+
         List<Benificiaire> result = beneficiareService.getAllBeneficiaireByAccount(compte);
 
-        // Verify the findAllByCompteIs method is called once
+
         verify(beneficiaireRepository, times(1)).findAllByCompteIs(compte);
 
-        // Assert the result
+
         assertEquals(0, result.size());
-        // Add more assertions as per your requirements
+
     }
 
     @Test
@@ -78,18 +78,18 @@ public class BeneficiareServiceTests {
         expectedBenificiaire.setBeneficiaireId(benificiaireId);
         expectedBenificiaire.setNamebeneficiaire("John Doe");
 
-        // Mocking repository behavior
+
         when(beneficiaireRepository.findByBeneficiaireId(benificiaireId)).thenReturn(expectedBenificiaire);
 
-        // Call service method
+
         Benificiaire result = beneficiareService.getBeneficiaireById(benificiaireId);
 
-        // Verify the findByBeneficiaireId method is called once
+
         verify(beneficiaireRepository, times(1)).findByBeneficiaireId(benificiaireId);
 
-        // Assert the result
+
         assertEquals("John Doe", result.getNamebeneficiaire());
-        // Add more assertions as per your requirements
+
     }
 
     @Test
@@ -107,21 +107,21 @@ public class BeneficiareServiceTests {
         updatedBenificiaire.setBank(bank.valueOf("CIH"));
         updatedBenificiaire.setCompte(new Compte());
 
-        // Mocking repository behavior
+
         when(beneficiaireRepository.findByBeneficiaireId(benificiaireId)).thenReturn(inputBenificiaire);
         when(beneficiaireRepository.save(inputBenificiaire)).thenReturn(updatedBenificiaire);
 
-        // Call service method
+
         Benificiaire result = beneficiareService.updateBeneficiaire(benificiaireId, updatedBenificiaire);
 
-        // Verify the findByBeneficiaireId and save methods are called once
+
         verify(beneficiaireRepository, times(1)).findByBeneficiaireId(benificiaireId);
         verify(beneficiaireRepository, times(1)).save(inputBenificiaire);
 
-        // Assert the updated result
+
         assertEquals("Updated John Doe", result.getNamebeneficiaire());
         assertEquals("CIH", result.getBank().toString());
-        // Add more assertions as per your requirements
+
     }
 
     @Test
@@ -130,13 +130,13 @@ public class BeneficiareServiceTests {
         Benificiaire benificiaireToDelete = new Benificiaire();
         benificiaireToDelete.setBeneficiaireId(benificiaireId);
 
-        // Mocking repository behavior
+
         when(beneficiaireRepository.findByBeneficiaireId(benificiaireId)).thenReturn(benificiaireToDelete);
 
-        // Call service method
+
         beneficiareService.deleteBeneficiaire(benificiaireId);
 
-        // Verify the delete method is called once
+
         verify(beneficiaireRepository, times(1)).delete(benificiaireToDelete);
     }
 }
