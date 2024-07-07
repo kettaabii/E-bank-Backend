@@ -1,10 +1,12 @@
 package com.example.E_bank.controller;
 
+import com.example.E_bank.exeption.fermetureException;
 import com.example.E_bank.modal.Compte;
 import com.example.E_bank.modal.User;
 import com.example.E_bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.E_bank.service.CompteService;
 
@@ -34,8 +36,14 @@ public class CompteController {
   }
 
   @PutMapping("/account/close/{id}")
-  public Compte fermerCompte(@PathVariable Integer id ,@RequestBody Compte compte) {
-    return  compteservice.fermerCompte(id);
+  public ResponseEntity<?> fermerCompte(@PathVariable Integer id , @RequestBody Compte compte) {
+    try {
+      Compte compte1 =compteservice.fermerCompte(id);
+      return ResponseEntity.ok(compte1);
+    }catch (fermetureException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
   }
 
 

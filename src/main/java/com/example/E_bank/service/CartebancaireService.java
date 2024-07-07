@@ -26,9 +26,10 @@ public class CartebancaireService  {
 
         if(carteBancaire.getNetwork().equals(VISA)) {
             carteBancaire.setCardNumber(creditCards().visa().get());
+            carteBancaire.setStatusCard(status_card.ACTIVATED);
         }else {  carteBancaire.setCardNumber(creditCards().masterCard().get());}
         carteBancaire.setExpirationDate(Date.valueOf(LocalDate.now().plusYears(3)));
-
+        carteBancaire.setStatusCard(status_card.ACTIVATED);
        return CarteBancaireRepository.save(carteBancaire);
 
     }

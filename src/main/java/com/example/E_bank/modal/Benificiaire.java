@@ -17,6 +17,7 @@ public class Benificiaire {
     private Integer beneficiaireId ;
 
     private String account_number ;
+
     private bank bank ;
     private String namebeneficiaire;
 

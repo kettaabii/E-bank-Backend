@@ -25,6 +25,7 @@ public class CarteBancaire {
     private String cardNumber;
     private Date expirationDate ;
     private card_type cardType;
+    @Enumerated(EnumType.STRING)
     private status_card statusCard;
     private String motifBlockage;
     private com.example.E_bank.enums.network network;

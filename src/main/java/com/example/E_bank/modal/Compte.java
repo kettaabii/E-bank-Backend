@@ -22,6 +22,7 @@ public class Compte {
     private com.example.E_bank.enums.account_type account_type;
     private Double solde ;
     private Date date_creation;
+    @Enumerated(EnumType.STRING)
     private com.example.E_bank.enums.status status;
 
 

@@ -1,8 +1,13 @@
 package com.example.E_bank.service;
 
 import com.example.E_bank.enums.status;
+import com.example.E_bank.enums.status_card;
+import com.example.E_bank.exeption.cardBlockedException;
+import com.example.E_bank.exeption.fermetureException;
+import com.example.E_bank.modal.CarteBancaire;
 import com.example.E_bank.modal.Compte;
 import com.example.E_bank.modal.User;
+import com.example.E_bank.repository.CarteBancaireRepository;
 import com.example.E_bank.repository.CompteRepository;
 import net.andreinc.mockneat.types.enums.IBANType;
 import net.andreinc.mockneat.types.enums.StringType;
@@ -11,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.E_bank.enums.status.Actif;
 import static net.andreinc.mockneat.unit.financial.IBANs.ibans;
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 
@@ -18,11 +24,14 @@ import static net.andreinc.mockneat.unit.text.Strings.strings;
 public class CompteService {
     @Autowired
     CompteRepository compteRepository;
+    @Autowired
+    CarteBancaireRepository carteBancaireRepository;
+
 
 
     public List<Compte> getAllAccountsByUserId(User user){
 
-        List<Compte> list =compteRepository.findAllByUser(user);
+        List<Compte> list =compteRepository.findAllByUserAndStatus(user.getUserId(), String.valueOf(Actif));
         return list;
     }
 
@@ -38,8 +47,14 @@ public class CompteService {
     public Compte getAccntBynumber(String number){
         return compteRepository.findCompteByAccountNumber(number);
     }
-    public Compte fermerCompte(Integer id){
+    public Compte fermerCompte(Integer id) throws fermetureException {
         Compte compte = compteRepository.findById(id).get();
+        List<CarteBancaire> listcards =carteBancaireRepository.findAllByCompteAccountId(compte.getAccountId());
+        listcards.stream().forEach(carteBancaire ->carteBancaire.setStatusCard(status_card.BLOCKED));
+        if (compte.getSolde()<=20){
+            String errorMessage = "impossible de fermer le compte : solde insuffisant ";
+            throw new fermetureException(errorMessage);
+        }
         compte.setStatus(status.Ferme);
         return compteRepository.save(compte);
     }
