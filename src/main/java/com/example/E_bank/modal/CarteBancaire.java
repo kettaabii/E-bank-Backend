@@ -1,6 +1,7 @@
 package com.example.E_bank.modal;
 
 import com.example.E_bank.enums.card_type;
+import com.example.E_bank.enums.network;
 import com.example.E_bank.enums.status_card;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,17 +19,20 @@ import java.util.List;
 @Entity (name = "carte_bancaire")
 public class CarteBancaire {
     @Id
+    @Column(name = "carte_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer carteId ;
     private String cardNumber;
     private Date expirationDate ;
     private card_type cardType;
     private status_card statusCard;
+    private String motifBlockage;
+    private com.example.E_bank.enums.network network;
 
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Compte compte;
 
-    @OneToMany(mappedBy = "carteBancaire")
-    private List<Blockage> blockageList;
+
 
 }

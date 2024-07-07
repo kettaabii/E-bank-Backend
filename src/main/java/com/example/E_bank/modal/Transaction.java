@@ -7,7 +7,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-@Data
+@Getter@Setter@AllArgsConstructor@NoArgsConstructor
 @Entity(name = "transaction")
 
 public class Transaction {
@@ -32,6 +32,12 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "beneficiaireId")
     private Benificiaire beneficiaire;
+
+
+
+
+
+
 
 
 }

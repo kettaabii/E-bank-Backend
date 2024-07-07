@@ -20,6 +20,7 @@ public class CompteController {
   @GetMapping("/showaccounts/{id}")
   public List<Compte> getComptes(@PathVariable Integer id) {
     User user = userservice.findUserById(id);
+    System.out.println(user +"Userrrrr");
     List<Compte> list = compteservice.getAllAccountsByUserId(user);
     System.out.println("///////////////////");
     list.forEach(System.out::println);
@@ -27,12 +28,15 @@ public class CompteController {
 
   }
 
-  @PostMapping("/add")
+  @PostMapping("/account/add")
   public Compte addCompte(@RequestBody Compte compte) {
     return compteservice.save(compte);
   }
 
-
+  @PutMapping("/account/close/{id}")
+  public Compte fermerCompte(@PathVariable Integer id ,@RequestBody Compte compte) {
+    return  compteservice.fermerCompte(id);
+  }
 
 
 //  @GetMapping ("/soldes/{idc}/{idu}")
