@@ -36,7 +36,7 @@ public class CompteController {
   }
 
   @PutMapping("/account/close/{id}")
-  public ResponseEntity<?> fermerCompte(@PathVariable Integer id , @RequestBody Compte compte) {
+  public ResponseEntity<?> fermerCompte(@PathVariable Integer id ) {
     try {
       Compte compte1 =compteservice.fermerCompte(id);
       return ResponseEntity.ok(compte1);
