@@ -6,14 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record SignupRequest(
-        @Schema(description = "name", example = "Mohamed")
-        @NotBlank(message = "Name cannot be blank")
-        String userName,
-
         @Schema(description = "email", example = "melke@gmail.com")
         @Email(message = "Invalid email format")
         @NotBlank(message = "Email cannot be blank")
-        String email,
+        String username,
 
         @Schema(description = "password", example = "123456")
         @NotBlank(message = "Password cannot be blank")

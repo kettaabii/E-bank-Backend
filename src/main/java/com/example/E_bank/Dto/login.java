@@ -9,7 +9,7 @@ public record login(
         @Schema(description = "email", example = "exemple@gmail.com")
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Invalid email format")
-        String email,
+        String username,
 
         @Schema(description = "password", example = "123456")
         @NotBlank(message = "Password cannot be blank")

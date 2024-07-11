@@ -37,10 +37,10 @@ public class UserService {
 
     @Transactional
     public void signUp(SignupRequest signupRequest) {
-        String email =signupRequest.email();
+
         String hashedPassword = passwordEncoder.encode(signupRequest.password());
 
-         userRepository.save(User.builder().userName(signupRequest.userName()).email(email).password(hashedPassword).build());
+         userRepository.save(User.builder().username(signupRequest.username()).password(hashedPassword).build());
     }
 
 }
