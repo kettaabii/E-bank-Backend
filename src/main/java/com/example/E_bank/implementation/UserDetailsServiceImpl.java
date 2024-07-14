@@ -19,5 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user =userRepository.findByUsername(email);
         System.out.println(user.getUsername()+"////"+user.getPassword());
         return user.builder().username(user.getUsername()).password(user.getPassword()).build();
+
     }
 }
