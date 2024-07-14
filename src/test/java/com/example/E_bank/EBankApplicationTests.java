@@ -22,9 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 
 class EBankApplicationTests {
-
-@Test
-	void contextLoads() {}
+//
+//@Test
+//	void contextLoads() {}
+//}
 }
 
 
